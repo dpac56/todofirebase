@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Self destructing todo app</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        
+  </head>
+  <body ng-app='todoApp' ng-controller='mainCtrl'>
+    <header>
+      <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#">Home</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="row">  
+        <table class="table table-striped">
+          <tr>
+            <th>Items</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+          <tr ng-repeat="todo in todos">
+            <div>
+            <td>{{todo.item}}</td>
+            <td>{{todo.date | date:'yyyy-MM-dd'}}</td>
+            </div>
+            <td>
+              <button class="btn btn-success" ng-click="deleteTodo($index)">Done</button>
+            </td>
+          </tr>
+        </table>
+        
+        <form ng-submit="addTodo()" style="text-align:center;">
+          <input type="text" ng-model="newItem" placeholder="Add a new item"></input>
+          <button class="btn btn-primary" type="submit">Save</button> 
+        </form>
+      </div>
+    </div>
+
+          
+
+    <!-- AngularJS -->
+    <script src="/scripts/angular.min.js"></script>
+    <script src="/scripts/angular-route.js"></script>
+
+    <script src="/app/app.js"></script>
+    <script src="/app/controllers/mainCtrl.js"></script>
+  </body>
+</html>
