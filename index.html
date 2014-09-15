@@ -25,9 +25,9 @@
             <th>Status</th>
           </tr>
           <tr ng-repeat="todo in todos">
-            <div>
+            <div ng-show="itemStatus($index)">
             <td>{{todo.item}}</td>
-            <td>{{todo.date | date:'yyyy-MM-dd'}}</td>
+            <td>{{todo.date | date:'yyyy-MM-dd' }}</td>
             </div>
             <td>
               <button class="btn btn-success" ng-click="deleteTodo($index)">Done</button>

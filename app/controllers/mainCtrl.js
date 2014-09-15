@@ -1,15 +1,24 @@
 (function(){
 
+  //variables initiated not in controller
+  //var oneWeekInEpoch = 604800;
+  var dateNow = Date.now();
+
+  //controller starts
   var mainCtrl = function($scope){
     $scope.todos = [
-      {item: "Item 1", date: "today"},
-      {item: "Item 2", date: "tomorrow"}
+      {item: "Item 1", date: 1410763878804, status: true},
+      {item: "Item 2", date: 1410763878804, status: false}
       ];
+
+    //To be deleted
+    $scope.testing = $scope.todos[1].status;
+    //To be deleted
 
     
     $scope.addTodo = function(){
 
-        var dateWhenItemAdded = new Date();
+        var dateWhenItemAdded = Date.now();
 
         $scope.todos.push({
           item: $scope.newItem,
@@ -24,9 +33,13 @@
       };
 
     $scope.itemStatus = function($index){
-      var currentDate = new Date();
-      
-    };
+        //return $scope.todos[$index].status;
+        if (dateNow - $scope.todos[$index].date < 604800 ){
+          return true;
+        } else {
+          return false;
+        }
+      };
 
     };
 
