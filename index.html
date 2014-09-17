@@ -3,6 +3,7 @@
   <head>
     <title>Self destructing todo app</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="app/stylesheets/custom.css">
         
   </head>
   <body ng-app='todoApp' ng-controller='mainCtrl'>
@@ -18,17 +19,18 @@
 
     <div class="container">
       <div class="row">  
+        <input type="checkbox" ng-model="check">Show expired Tasks?</input>
         <table class="table table-striped">
           <tr>
             <th>Items</th>
-            <th>Date</th>
+            <th>Date Added</th>
+            <th>Days Left</th>
             <th>Status</th>
           </tr>
-          <tr ng-repeat="todo in todos">
-            <div ng-show="itemStatus($index)">
+          <tr ng-repeat="todo in todos" ng-show="itemStatus($index) || check">
             <td>{{todo.item}}</td>
             <td>{{todo.date | date:'yyyy-MM-dd' }}</td>
-            </div>
+            <td ng-class="{'task-expired': todo.daysLeft() < 0}">{{todo.daysLeft() | number:0}}</td>
             <td>
               <button class="btn btn-success" ng-click="deleteTodo($index)">Done</button>
             </td>

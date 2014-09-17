@@ -1,29 +1,32 @@
 (function(){
 
   //variables initiated not in controller
-  //var oneWeekInEpoch = 604800;
-  var dateNow = Date.now();
+  var oneWeekInEpoch = 604800000;
+  
+  function TodoItem(item, date) {
+    this.item = item;
+    this.date = date;
+    this.daysLeft = function () {
+      return (7-(Date.now() - this.date)/(1000*24*60*60));
+    };
+  }
 
   //controller starts
   var mainCtrl = function($scope){
     $scope.todos = [
-      {item: "Item 1", date: 1410763878804, status: true},
-      {item: "Item 2", date: 1410763878804, status: false}
+      new TodoItem("Item 1", 1310763878804),
+      new TodoItem("Item 2", 1410763878804),
+      //Another way to add items
+      //{item: "Item 3", date: 1410763878804, daysLeft: function () { return (7-(Date.now() - this.date)/(1000*24*60*60))}},
       ];
 
-    //To be deleted
-    $scope.testing = $scope.todos[1].status;
-    //To be deleted
+    $scope.dateNow = Date.now();
 
-    
     $scope.addTodo = function(){
 
         var dateWhenItemAdded = Date.now();
 
-        $scope.todos.push({
-          item: $scope.newItem,
-          date: dateWhenItemAdded
-        });
+        $scope.todos.push(new TodoItem($scope.newItem, dateWhenItemAdded));
 
         $scope.newItem = '';
       };
@@ -33,8 +36,7 @@
       };
 
     $scope.itemStatus = function($index){
-        //return $scope.todos[$index].status;
-        if (dateNow - $scope.todos[$index].date < 604800 ){
+        if ($scope.dateNow - $scope.todos[$index].date < oneWeekInEpoch){
           return true;
         } else {
           return false;
