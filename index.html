@@ -19,7 +19,7 @@
 
     <div class="container">
       <div class="row">  
-        <input type="checkbox" ng-model="check">Show expired Tasks?</input>
+        <input type="checkbox" ng-model="checkbox">Show expired Tasks?</input>
         <table class="table table-striped">
           <tr>
             <th>Items</th>
@@ -27,7 +27,7 @@
             <th>Days Left</th>
             <th>Status</th>
           </tr>
-          <tr ng-repeat="todo in todos" ng-show="itemStatus($index) || check">
+          <tr ng-repeat="todo in todos" ng-show="!checkbox && todo.isCurrent() || checkbox && !todo.isCurrent()">
             <td>{{todo.item}}</td>
             <td>{{todo.date | date:'yyyy-MM-dd' }}</td>
             <td ng-class="{'task-expired': todo.daysLeft() < 0}">{{todo.daysLeft() | number:0}}</td>
