@@ -7,13 +7,14 @@
     this.item = item;
     this.date = date;
     this.timeLimit = timeLimit;
-    this.daysLeft = function () {
-      return (7-(Date.now() - this.date)/(1000*24*60*60));
-    };
-    this.isCurrent = function(){
-      return Date.now() - this.date < this.timeLimit;
-    };
   }
+
+  TodoItem.prototype.daysLeft = function () {
+    return (7-(Date.now() - this.date)/(1000*24*60*60));
+  };
+  TodoItem.prototype.isCurrent = function(){
+    return Date.now() - this.date < this.timeLimit;
+  };
 
   //controller starts
   var mainCtrl = function($scope){
