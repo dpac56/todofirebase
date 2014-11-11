@@ -1,6 +1,6 @@
 (function(){
 
-  angular.module('todoApp', []);
+  angular.module('todoApp', ['firebase']);
 
 
 }());
