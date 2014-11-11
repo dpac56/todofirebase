@@ -27,7 +27,8 @@
             <th>Days Left</th>
             <th>Status</th>
           </tr>
-          <tr ng-repeat="todo in todos" ng-show="!checkbox && todo.isCurrent() || checkbox && !todo.isCurrent()">
+          <!--<tr ng-repeat="todo in todos" ng-show="!checkbox && todo.isCurrent() || checkbox && !todo.isCurrent()">-->
+          <tr ng-repeat="todo in todos">
             <td>{{todo.item}}</td>
             <td>{{todo.date | date:'yyyy-MM-dd' }}</td>
             <td ng-class="{'task-expired': todo.daysLeft() < 0}">{{todo.daysLeft() | number:0}}</td>
@@ -47,12 +48,11 @@
           
 
     <!-- AngularJS -->
-    <script src="/scripts/angular.min.js"></script>
-    <script src="/scripts/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.js"></script>
     <!-- Firebase -->
-    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <script src="//cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
     <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
+    <script src="//cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
     <script src="/app/app.js"></script>
     <script src="/app/controllers/mainCtrl.js"></script>
   </body>

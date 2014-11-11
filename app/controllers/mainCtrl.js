@@ -2,7 +2,6 @@
 
   //variables initiated not in controller
   var oneWeekInEpoch = 604800000;
-  
   function TodoItem(item, date, timeLimit) {
     this.item = item;
     this.date = date;
@@ -21,8 +20,8 @@
 
     var ref = new Firebase("https://todo7.firebaseio.com/list");
     var sync = $firebase(ref);
-    var $scope.todos = sync.$asArray();
-    
+    $scope.todos = sync.$asArray();
+
 
     // $scope.todos = [
     //   new TodoItem("Item 1", 1310763878804, oneWeekInEpoch),
@@ -47,10 +46,10 @@
       };
 
     $scope.deleteTodo = function($index){
-        $scope.todos.splice($index, 1);
+        $scope.todos.$remove($index);
       };
 
-    
+
 
     };
 
