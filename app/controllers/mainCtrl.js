@@ -21,6 +21,8 @@
     var ref = new Firebase("https://todo7.firebaseio.com/list");
     var sync = $firebase(ref);
     $scope.todos = sync.$asArray();
+    $scope.today = Date.now();
+    
 
 
     // $scope.todos = [
@@ -38,7 +40,7 @@
 
         var newTodoItem = new TodoItem($scope.newItem, dateWhenItemAdded, oneWeekInEpoch)
 
-        // $scope.todos.push(new TodoItem($scope.newItem, dateWhenItemAdded, oneWeekInEpoch));
+        // var expiredItem = new TodoItem("expired test", "1415023217", oneWeekInEpoch);
 
         $scope.todos.$add(newTodoItem);
 

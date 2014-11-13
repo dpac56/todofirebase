@@ -28,10 +28,10 @@
             <th>Status</th>
           </tr>
           <!--<tr ng-repeat="todo in todos" ng-show="!checkbox && todo.isCurrent() || checkbox && !todo.isCurrent()">-->
-          <tr ng-repeat="todo in todos">
+          <tr ng-repeat="todo in todos" ng-show="(today - todo.date < 604800000) && !checkbox || checkbox && !(today - todo.date < 604800000)">
             <td>{{todo.item}}</td>
             <td>{{todo.date | date:'yyyy-MM-dd' }}</td>
-            <td ng-class="{'task-expired': todo.daysLeft() < 0}">{{todo.daysLeft() | number:0}}</td>
+            <td>{{7-((today - todo.date)/86400000) | number:0}}</td>
             <td>
               <button class="btn btn-success" ng-click="deleteTodo($index)">Done</button>
             </td>
@@ -53,6 +53,7 @@
     <script src="//cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
     <!-- AngularFire -->
     <script src="//cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.3/firebase-simple-login.js"></script>
     <script src="/app/app.js"></script>
     <script src="/app/controllers/mainCtrl.js"></script>
   </body>
