@@ -2,62 +2,60 @@
 
   //variables initiated not in controller
   var oneWeekInEpoch = 604800000;
-  function TodoItem(item, date, timeLimit) {
-    this.item = item;
-    this.date = date;
-    this.timeLimit = timeLimit;
-  }
-
-  TodoItem.prototype.daysLeft = function () {
-    return (7-(Date.now() - this.date)/(1000*24*60*60));
-  };
-  TodoItem.prototype.isCurrent = function(){
-    return Date.now() - this.date < this.timeLimit;
-  };
 
   //controller starts
-  var mainCtrl = function($scope, $firebase){
+  var mainCtrl = function($scope, $firebase, $window, $firebaseSimpleLogin){
 
-    var ref = new Firebase("https://todo7.firebaseio.com/list");
+    var ref = new $window.Firebase('https://todo7.firebaseio.com/list');
     var sync = $firebase(ref);
+    var authClient = $firebaseSimpleLogin(ref);
+    $scope.login = function () {
+      ref.authWithPassword({
+        email    : $scope.username,
+        password : $scope.password
+      }, function(error, authData) {
+        if (error === null) {
+          // user authenticated with Firebase
+          console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+        } else {
+          console.log("Error authenticating user:", error);
+        }
+      });
+
+    }
+
+
     $scope.todos = sync.$asArray();
-    $scope.today = Date.now();
-    
-
-
-    // $scope.todos = [
-    //   new TodoItem("Item 1", 1310763878804, oneWeekInEpoch),
-    //   new TodoItem("Item 2", 1410763878804, oneWeekInEpoch),
-    //   //Another way to add items
-    //   //{item: "Item 3", date: 1410763878804, daysLeft: function () { return (7-(Date.now() - this.date)/(1000*24*60*60))}},
-    //   ];
-
-    //$scope.dateNow = Date.now();
 
     $scope.addTodo = function(){
 
-        var dateWhenItemAdded = Date.now();
+      var dateWhenItemAdded = Date.now();
 
-        var newTodoItem = new TodoItem($scope.newItem, dateWhenItemAdded, oneWeekInEpoch)
+      var newTodoItem = new TodoItem($scope.newItem, dateWhenItemAdded, oneWeekInEpoch);
 
-        // var expiredItem = new TodoItem("expired test", "1415023217", oneWeekInEpoch);
+      $scope.todos.$add(newTodoItem);
 
-        $scope.todos.$add(newTodoItem);
-
-        $scope.newItem = '';
-      };
-
-    $scope.deleteTodo = function($index){
-        $scope.todos.$remove($index);
-      };
-
-
-
+      $scope.newItem = '';
     };
 
-  mainCtrl.$inject = ['$scope', '$firebase'];
+    $scope.deleteTodo = function($index){
+      $scope.todos.$remove($index);
+    };
+
+    $scope.isCurrent = function (todo) {
+      return (Date.now() - todo.date < 604800000);
+    };
+
+    $scope.daysLeft = function (todo) {
+      return 7-((Date.now() - todo.date)/86400000);
+    };
+
+
+  };
+
+  mainCtrl.$inject = ['$scope', '$firebase', '$window', '$firebaseSimpleLogin'];
 
   angular.module('todoApp')
-    .controller('mainCtrl', mainCtrl);
+  .controller('mainCtrl', mainCtrl);
 
 }());
